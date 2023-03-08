@@ -3,7 +3,13 @@
   <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" class="row">
     <mat-form-field class="col-12">
       <mat-label>Reminder:</mat-label>
-      <input matInput type="text" id="reminder" maxlength="30" formControlName="reminder" />
+      <input
+        matInput
+        type="text"
+        id="reminder"
+        maxlength="30"
+        formControlName="reminder"
+      />
       <mat-error
         *ngIf="
           reminderForm.controls['reminder'].invalid &&
@@ -19,7 +25,13 @@
         >
       </mat-error>
     </mat-form-field>
-    <span class="remainder-remaining">{{reminderForm.get("reminder").value.length}}/30</span>
+    <span class="remainder-remaining"
+      >{{
+        reminderForm.get("reminder").value
+          ? reminderForm.get("reminder").value.length
+          : 0
+      }}/30</span
+    >
 
     <mat-form-field>
       <mat-label>Date:</mat-label>

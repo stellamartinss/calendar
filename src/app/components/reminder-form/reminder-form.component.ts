@@ -11,6 +11,7 @@ import { Reminder } from 'src/app/interfaces/reminder';
 export class ReminderFormComponent implements OnInit {
 
   public reminderForm: FormGroup
+  public reminders = []
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Reminder, private formBuilder: FormBuilder) {
     this.reminderForm = new FormGroup({
@@ -26,7 +27,10 @@ export class ReminderFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.reminderForm.value);
+    this.reminders.push(this.reminderForm.value)
+    this.reminderForm.reset()
+    console.log(this.reminderForm.value)
+    console.log(this.reminders);
     // add code to save reminder to backend or local storage
   }
 }
