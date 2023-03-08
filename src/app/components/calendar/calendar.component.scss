@@ -1,3 +1,60 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.calendar-container {
+  font-family: Arial, sans-serif;
+  margin: 50px auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.calendar-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.weekdays {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  align-items: center;
+}
+
+.weekday {
+  flex: 1;
+  text-align: center;
+}
+
+.days {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.week {
+  display: flex;
+  flex-direction: row;
+  height: calc((100% - 30px) / 6);
+  margin-bottom: 5px;
+}
+.outside-month {
+  color: #d1d1d1;
+}
+
+.day-cell {
+  text-align: right !important;
+}

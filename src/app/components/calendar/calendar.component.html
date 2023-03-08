@@ -5,9 +5,41 @@
   <span>Jobsity challenge</span>
   <span class="spacer"></span>
   <button mat-button (click)="openReminderForm()">
-   <mat-icon>add</mat-icon> New reminder
- </button>
+    <mat-icon>add</mat-icon> New reminder
+  </button>
 </mat-toolbar>
 
 <!-- Create the calendar here -->
 <!-- ======================== -->
+
+<div class="container">
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button (click)="prevYear()">Prev Year</button>
+      <button (click)="prevMonth()">Prev Month</button>
+      <h2>{{ monthName }} {{ year }}</h2>
+      <button (click)="nextMonth()">Next Month</button>
+      <button (click)="nextYear()">Next Year</button>
+    </div>
+
+    <div class="calendar-body">
+      <div class="row weekdays">
+        <div class="col weekday" *ngFor="let dayInWeek of daysInWeek">
+          {{ dayInWeek }}
+        </div>
+      </div>
+      <div class="days">
+        <div class="row day-row" *ngFor="let week of weeks">
+          <div
+            class="col day-cell my-4"
+            *ngFor="let day of week"
+            [ngClass]="{ 'outside-month': day.outsideMonth }"
+            (click)="selectDate(day)"
+          >
+            {{ day.number }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
