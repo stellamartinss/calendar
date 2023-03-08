@@ -58,6 +58,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.month = this.selectedDate.getMonth();
     this.year = this.selectedDate.getFullYear();
     this.monthName = this.getMonthName(this.month);
+    this.today = new Date();
     this.generateCalendar();
   }
 
@@ -72,6 +73,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             weather: this.getWeather(reminder.city),
           };
         });
+
         console.log(reminders);
       });
   }
@@ -164,13 +166,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }
       this.weeks.push(week);
     }
+
+    console.log(this.weeks)
   }
 
   getMonthName(month: number) {
     return this.monthsOfYear[month].name;
   }
 
-  selectDay(day) {
+  selectDay(day: number) {
     console.log(day);
   }
 }

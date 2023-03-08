@@ -31,9 +31,9 @@
       <div class="days">
         <div class="row day-row" *ngFor="let week of weeks">
           <div
-            class="col day-cell my-4"
+            class="col day-cell py-4"
             *ngFor="let day of week"
-            [ngClass]="{ 'outside-month': day.outsideMonth }"
+            [ngClass]="{ 'outside-month': day.outsideMonth, 'today': day.number === today.getDate() }"
             (click)="selectDate(day)"
           >
             {{ day.number }}
