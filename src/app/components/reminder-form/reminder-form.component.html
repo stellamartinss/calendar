@@ -1,1 +1,82 @@
-<p>Reminder form will be here :)</p>
+<div class="container">
+  <h1>Add Reminder</h1>
+  <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" class="row">
+    <mat-form-field class="col-12">
+      <mat-label>Reminder:</mat-label>
+      <input matInput type="text" id="reminder" maxlength="30" formControlName="reminder" />
+      <mat-error
+        *ngIf="
+          reminderForm.controls['reminder'].invalid &&
+          (reminderForm.controls['reminder'].dirty ||
+            reminderForm.controls['reminder'].touched)
+        "
+      >
+        <span *ngIf="reminderForm.controls['reminder'].errors.required"
+          >Reminder is required.</span
+        >
+        <span *ngIf="reminderForm.controls['reminder'].errors.maxlength"
+          >Reminder cannot be longer than 30 characters.</span
+        >
+      </mat-error>
+    </mat-form-field>
+    <span class="remainder-remaining">{{reminderForm.get("reminder").value.length}}/30</span>
+
+    <mat-form-field>
+      <mat-label>Date:</mat-label>
+      <input matInput type="date" id="date" formControlName="date" />
+      <mat-error
+        *ngIf="
+          reminderForm.controls['date'].invalid &&
+          (reminderForm.controls['date'].dirty ||
+            reminderForm.controls['date'].touched)
+        "
+      >
+        <span *ngIf="reminderForm.controls['date'].errors.required"
+          >Date is required.</span
+        >
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Time:</mat-label>
+      <input matInput type="time" id="time" formControlName="time" />
+      <mat-error
+        *ngIf="
+          reminderForm.controls['time'].invalid &&
+          (reminderForm.controls['time'].dirty ||
+            reminderForm.controls['time'].touched)
+        "
+      >
+        <span *ngIf="reminderForm.controls['time'].errors.required"
+          >Time is required.</span
+        >
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>City:</mat-label>
+      <input matInput type="text" id="city" formControlName="city" />
+      <mat-error
+        *ngIf="
+          reminderForm.controls['city'].invalid &&
+          (reminderForm.controls['city'].dirty ||
+            reminderForm.controls['city'].touched)
+        "
+      >
+        <span *ngIf="reminderForm.controls['city'].errors.required"
+          >City is required.</span
+        >
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="reminderForm.invalid"
+    >
+      Submit
+    </button>
+  </form>
+</div>
