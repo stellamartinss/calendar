@@ -86,23 +86,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- <mat-form-field>
-      <mat-label>City:</mat-label>
-      <input matInput type="text" />
-
-      <mat-error
-        *ngIf="
-          reminderForm.controls['city'].invalid &&
-          (reminderForm.controls['city'].dirty ||
-            reminderForm.controls['city'].touched)
-        "
-      >
-        <span *ngIf="reminderForm.controls['city'].errors.required"
-          >City is required.</span
-        >
-      </mat-error>
-    </mat-form-field> -->
-
     <div class="col-12 mb-3">
       <label class="mb-1">Escolha uma cor</label>
       <mat-chip-list #chipList formControlName="color">
