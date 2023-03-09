@@ -6,14 +6,9 @@ import { CalendarService } from 'src/app/services/calendar.service';
 import { WeatherService } from 'src/app/services/weather.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
+import { CommonService } from 'src/app/services/common.service';
+import { Day } from 'src/app/interfaces/day';
 
-interface Day {
-  number: number;
-  month: number;
-  year: number;
-  outsideMonth: boolean;
-  date?: Date;
-}
 
 @Component({
   selector: 'app-calendar',
@@ -54,7 +49,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   constructor(
     private calendarService: CalendarService,
     private weatherService: WeatherService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private commonService: CommonService
   ) {
     this.selectedDate = new Date();
     this.month = this.selectedDate.getMonth();
@@ -73,51 +69,18 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  getReminders() {
-    this.calendarService
-      .list(new Date())
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(async (reminders: Reminder[]) => {
-        const promises = reminders.map(async (reminder: Reminder) => {
-          const { city, ...rest } = reminder;
-          const weather = city
-            ? await this.weatherService.getWeatherInformation(city).toPromise()
-            : {};
-          return { ...rest, city, weather };
-        });
-
-        const results = await Promise.all(promises);
-        this.reminders = results.filter(
-          (result) => result.weather !== undefined
-        );
-
-        this.weeks = this.weeks.map((week) => {
-          return week.map((day) => {
-            const dayDate = new Date(day.date);
-            const remindersForDay = this.reminders.filter(
-              (reminder) => {
-                const reminderDate = new Date(reminder.dateTime);
-                return (
-                  dayDate.getFullYear() === reminderDate.getFullYear() &&
-                  dayDate.getMonth() === reminderDate.getMonth() &&
-                  dayDate.getDate() === reminderDate.getDate()
-                );
-              }
-            );
-            return { ...day, reminders: remindersForDay };
-          });
-        });
-
-        console.log(this.weeks)
-      });
-  }
-
   openReminderForm(reminder?: Reminder) {
-    this.matDialog.open(ReminderFormComponent, {
+    const dialogRef = this.matDialog.open(ReminderFormComponent, {
       data: {
-        reminder,
+        reminder: reminder,
+        weeks: this.weeks
       },
     });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      debugger
+      this.weeks = data
+    })
   }
 
   prevYear() {
@@ -159,8 +122,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   selectDate(day) {
     if (!day.outsideMonth) {
       this.selectedDate = new Date(this.year, this.month, day.number);
-      this.generateCalendar();
+      this.getReminders()
     }
+  }
+
+  async getReminders() {
+    this.weeks = await this.commonService.loadCalendar(this.weeks)
   }
 
   generateCalendar() {
@@ -194,8 +161,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }
       this.weeks.push(week);
     }
-
-    console.log(this.weeks);
   }
 
   getMonthName(month: number) {
