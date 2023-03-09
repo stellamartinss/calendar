@@ -19,6 +19,59 @@ import { CommonService } from 'src/app/services/common.service';
 export class ReminderFormComponent implements OnInit {
   public reminderForm: FormGroup;
   public reminders = [];
+  public colors = ['#02779e', '#63d3ff', '#be80ff', '#9061c2', '#ff548f'];
+  public cities = [
+    'Tokyo',
+    'New York',
+    'Paris',
+    'London',
+    'Beijing',
+    'Dubai',
+    'Los Angeles',
+    'Rome',
+    'Bangkok',
+    'Istanbul',
+    'Shanghai',
+    'Barcelona',
+    'Berlin',
+    'Sydney',
+    'San Francisco',
+    'Amsterdam',
+    'Rio de Janeiro',
+    'Vienna',
+    'Chicago',
+    'Cape Town',
+    'Moscow',
+    'Hong Kong',
+    'Toronto',
+    'Mumbai',
+    'Dublin',
+    'Singapore',
+    'Riyadh',
+    'Madrid',
+    'Seoul',
+    'Melbourne',
+    'Vancouver',
+    'Miami',
+    'Edinburgh',
+    'Buenos Aires',
+    'Zurich',
+    'Seattle',
+    'Lisbon',
+    'Hanoi',
+    'Prague',
+    'Jerusalem',
+    'Athens',
+    'Copenhagen',
+    'Oslo',
+    'Stockholm',
+    'Kyoto',
+    'Krakow',
+    'Budapest',
+    'Dubrovnik',
+    'Santiago',
+  ];
+  separatorKeysCodes: number[] = [1, 2];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -51,7 +104,14 @@ export class ReminderFormComponent implements OnInit {
 
     if (result) {
       this.reminderForm.reset();
-      this.dialogRef.close(await this.commonService.loadCalendar(this.data.weeks));
+      this.dialogRef.close(
+        await this.commonService.loadCalendar(this.data.weeks)
+      );
     }
+  }
+
+  chooseColor(color: string) {
+    this.reminderForm.get('color').setValue(color);
+    console.log(this.reminderForm.value)
   }
 }

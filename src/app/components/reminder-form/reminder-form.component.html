@@ -66,8 +66,13 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>City:</mat-label>
-      <input matInput type="text" id="city" formControlName="city" />
+      <mat-label>City</mat-label>
+      <mat-select  id="city" formControlName="city">
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+
       <mat-error
         *ngIf="
           reminderForm.controls['city'].invalid &&
@@ -81,15 +86,38 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="col-12">
-      <mat-label>Color:</mat-label>
-      <input
-        matInput
-        type="text"
-        id="color"
-        maxlength="30"
-        formControlName="color"
-      />
+    <!-- <mat-form-field>
+      <mat-label>City:</mat-label>
+      <input matInput type="text" />
+
+      <mat-error
+        *ngIf="
+          reminderForm.controls['city'].invalid &&
+          (reminderForm.controls['city'].dirty ||
+            reminderForm.controls['city'].touched)
+        "
+      >
+        <span *ngIf="reminderForm.controls['city'].errors.required"
+          >City is required.</span
+        >
+      </mat-error>
+    </mat-form-field> -->
+
+    <div class="col-12 mb-3">
+      <label class="mb-1">Escolha uma cor</label>
+      <mat-chip-list #chipList formControlName="color">
+        <mat-chip
+          *ngFor="let color of colors"
+          class="pointer"
+          [ngStyle]="{ 'background-color': color }"
+          [selectable]="true"
+          [removable]="true"
+          (click)="chooseColor(color)"
+        >
+          <span class="chip-content"></span>
+        </mat-chip>
+      </mat-chip-list>
+
       <mat-error
         *ngIf="
           reminderForm.controls['color'].invalid &&
@@ -101,7 +129,7 @@
           >Color is required.</span
         >
       </mat-error>
-    </mat-form-field>
+    </div>
 
     <button
       mat-raised-button
