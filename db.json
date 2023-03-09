@@ -4,13 +4,13 @@
       "text": "Test 1",
       "dateTime": "2023-03-01T09:00:00.000Z",
       "color": "blue",
-      "city": "New York"
+      "city": "São Paulo"
     },
     {
       "text": "Test 2",
       "dateTime": "2023-03-02T10:00:00.000Z",
       "color": "red",
-      "city": "Los Angeles"
+      "city": "Palmas"
     },
 
     {
@@ -23,7 +23,7 @@
       "text": "Test 3",
       "dateTime": "2023-03-03T11:00:00.000Z",
       "color": "green",
-      "city": "Chicago"
+      "city": "Nairobi"
     },
     {
       "text": "Test 4",
