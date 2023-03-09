@@ -1,0 +1,64 @@
+{
+  "reminders": [
+    {
+      "reminder": "Test 1",
+      "date": "2023-03-09",
+      "time": "09:00",
+      "city": "New York"
+    },
+    {
+      "reminder": "Test 2",
+      "date": "2023-03-10",
+      "time": "10:00",
+      "city": "Paris"
+    },
+    {
+      "reminder": "Test 3",
+      "date": "2023-03-11",
+      "time": "11:00",
+      "city": "London"
+    },
+    {
+      "reminder": "Test 4",
+      "date": "2023-03-12",
+      "time": "12:00",
+      "city": "Tokyo"
+    },
+    {
+      "reminder": "Test 5",
+      "date": "2023-03-13",
+      "time": "13:00",
+      "city": "Sydney"
+    },
+    {
+      "reminder": "Test 6",
+      "date": "2023-03-14",
+      "time": "14:00",
+      "city": "Beijing"
+    },
+    {
+      "reminder": "Test 7",
+      "date": "2023-03-15",
+      "time": "15:00",
+      "city": "Moscow"
+    },
+    {
+      "reminder": "Test 8",
+      "date": "2023-03-16",
+      "time": "16:00",
+      "city": "Rio de Janeiro"
+    },
+    {
+      "reminder": "Test 9",
+      "date": "2023-03-17",
+      "time": "17:00",
+      "city": "Cairo"
+    },
+    {
+      "reminder": "Test 10",
+      "date": "2023-03-18",
+      "time": "18:00",
+      "city": "Madrid"
+    }
+  ]
+}
