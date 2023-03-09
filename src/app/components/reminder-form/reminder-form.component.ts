@@ -5,8 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Day } from 'src/app/interfaces/day';
 import { Reminder } from 'src/app/interfaces/reminder';
+import { CalendarService } from 'src/app/services/calendar.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-reminder-form',
@@ -18,14 +21,19 @@ export class ReminderFormComponent implements OnInit {
   public reminders = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: Reminder,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { reminders: Reminder; weeks: Day[][] },
+    private calendarService: CalendarService,
+    private commonService: CommonService,
+    private dialogRef: MatDialogRef<ReminderFormComponent>
   ) {
     this.reminderForm = new FormGroup({
-      reminder: new FormControl('', [
+      text: new FormControl('', [
         Validators.required,
         Validators.maxLength(30),
       ]),
-      date: new FormControl('', Validators.required),
+      dateTime: new FormControl('', Validators.required),
+      color: new FormControl('', Validators.required),
       time: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
     });
@@ -35,12 +43,15 @@ export class ReminderFormComponent implements OnInit {
     console.log(this.data);
   }
 
-  onSubmit() {
-    this.reminders.push(this.reminderForm.value);
-    this.reminderForm.reset();
+  async onSubmit() {
+    this.reminderForm.value.id = new Date().toJSON();
+    const result = await this.calendarService
+      .create(this.reminderForm.value)
+      .toPromise();
 
-    console.log(this.reminderForm.value);
-    console.log(this.reminders);
-    // add code to save reminder to backend or local storage
+    if (result) {
+      this.reminderForm.reset();
+      this.dialogRef.close(await this.commonService.loadCalendar(this.data.weeks));
+    }
   }
 }

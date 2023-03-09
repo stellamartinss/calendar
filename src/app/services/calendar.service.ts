@@ -13,8 +13,8 @@ export class CalendarService {
 
   constructor(private http: HttpClient) { }
 
-  create(data: Reminder): Reminder {
-    return data;
+  create(data: Reminder): Observable<Object> {
+    return this.http.post('http://localhost:3000/reminders', data)
   }
 
   edit(data: Reminder): Reminder {
