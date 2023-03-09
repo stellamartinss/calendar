@@ -12,6 +12,7 @@ interface Day {
   month: number;
   year: number;
   outsideMonth: boolean;
+  date?: Date;
 }
 
 @Component({
@@ -48,6 +49,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   currentMonth: number;
   currentYear: number;
   calendarDays: { date: number; isCurrentMonth: boolean }[] = [];
+  reminders: Reminder[];
 
   constructor(
     private calendarService: CalendarService,
@@ -63,24 +65,51 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.calendarService
-      .list(new Date())
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(async (reminders: Reminder[]) => {
-        const re = await Promise.all(reminders.map(async (reminder: Reminder) => {
-          return {
-            ...reminder,
-            weather: await this.weatherService.getWeatherInformation(reminder.city).toPromise(),
-          };
-        }));
-
-        console.log(re)
-      });
+    this.getReminders()
   }
 
   ngOnDestroy() {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
+  }
+
+  getReminders() {
+    this.calendarService
+      .list(new Date())
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(async (reminders: Reminder[]) => {
+        const promises = reminders.map(async (reminder: Reminder) => {
+          const { city, ...rest } = reminder;
+          const weather = city
+            ? await this.weatherService.getWeatherInformation(city).toPromise()
+            : {};
+          return { ...rest, city, weather };
+        });
+
+        const results = await Promise.all(promises);
+        this.reminders = results.filter(
+          (result) => result.weather !== undefined
+        );
+
+        this.weeks = this.weeks.map((week) => {
+          return week.map((day) => {
+            const dayDate = new Date(day.date);
+            const remindersForDay = this.reminders.filter(
+              (reminder) => {
+                const reminderDate = new Date(reminder.dateTime);
+                return (
+                  dayDate.getFullYear() === reminderDate.getFullYear() &&
+                  dayDate.getMonth() === reminderDate.getMonth() &&
+                  dayDate.getDate() === reminderDate.getDate()
+                );
+              }
+            );
+            return { ...day, reminders: remindersForDay };
+          });
+        });
+
+        console.log(this.weeks)
+      });
   }
 
   openReminderForm(reminder?: Reminder) {
@@ -94,11 +123,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
   prevYear() {
     this.year--;
     this.generateCalendar();
+    this.getReminders()
   }
 
   nextYear() {
     this.year++;
     this.generateCalendar();
+    this.getReminders()
   }
 
   prevMonth() {
@@ -110,6 +141,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
     this.monthName = this.getMonthName(this.month);
     this.generateCalendar();
+    this.getReminders()
   }
 
   nextMonth() {
@@ -121,6 +153,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
     this.monthName = this.getMonthName(this.month);
     this.generateCalendar();
+    this.getReminders()
   }
 
   selectDate(day) {
@@ -144,7 +177,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
 
     for (let i = 1; i <= numDaysInMonth; i++) {
-      week.push({ number: i, outsideMonth: false });
+      const date = new Date(this.year, this.month, i);
+      week.push({ number: i, outsideMonth: false, date: date.toJSON() });
       dayOfWeek++;
 
       if (dayOfWeek === 7) {
@@ -161,7 +195,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.weeks.push(week);
     }
 
-    console.log(this.weeks)
+    console.log(this.weeks);
   }
 
   getMonthName(month: number) {

@@ -1,64 +1,75 @@
 {
   "reminders": [
     {
-      "reminder": "Test 1",
-      "date": "2023-03-09",
-      "time": "09:00",
+      "text": "Test 1",
+      "dateTime": "2023-03-01T09:00:00.000Z",
+      "color": "blue",
       "city": "New York"
     },
     {
-      "reminder": "Test 2",
-      "date": "2023-03-10",
-      "time": "10:00",
-      "city": "Paris"
+      "text": "Test 2",
+      "dateTime": "2023-03-02T10:00:00.000Z",
+      "color": "red",
+      "city": "Los Angeles"
+    },
+
+    {
+      "text": "Test 2.1",
+      "dateTime": "2023-03-02T10:00:00.000Z",
+      "color": "blue",
+      "city": "Los Angeles"
     },
     {
-      "reminder": "Test 3",
-      "date": "2023-03-11",
-      "time": "11:00",
-      "city": "London"
+      "text": "Test 3",
+      "dateTime": "2023-03-03T11:00:00.000Z",
+      "color": "green",
+      "city": "Chicago"
     },
     {
-      "reminder": "Test 4",
-      "date": "2023-03-12",
-      "time": "12:00",
-      "city": "Tokyo"
+      "text": "Test 4",
+      "dateTime": "2023-03-04T12:00:00.000Z",
+      "color": "purple"
     },
     {
-      "reminder": "Test 5",
-      "date": "2023-03-13",
-      "time": "13:00",
-      "city": "Sydney"
+      "text": "Test 5",
+      "dateTime": "2023-03-05T13:00:00.000Z",
+      "color": "orange",
+      "city": "San Francisco"
     },
     {
-      "reminder": "Test 6",
-      "date": "2023-03-14",
-      "time": "14:00",
-      "city": "Beijing"
+      "text": "Test 6",
+      "dateTime": "2023-03-06T14:00:00.000Z",
+      "color": "pink",
+      "city": "Seattle"
     },
     {
-      "reminder": "Test 7",
-      "date": "2023-03-15",
-      "time": "15:00",
-      "city": "Moscow"
+      "text": "Test 7",
+      "dateTime": "2023-03-07T15:00:00.000Z",
+      "color": "brown"
     },
     {
-      "reminder": "Test 8",
-      "date": "2023-03-16",
-      "time": "16:00",
-      "city": "Rio de Janeiro"
+      "text": "Test 8",
+      "dateTime": "2023-03-08T16:00:00.000Z",
+      "color": "gray",
+      "city": "Boston"
     },
     {
-      "reminder": "Test 9",
-      "date": "2023-03-17",
-      "time": "17:00",
-      "city": "Cairo"
+      "text": "Test 9",
+      "dateTime": "2023-03-09T17:00:00.000Z",
+      "color": "yellow",
+      "city": "Miami"
     },
     {
-      "reminder": "Test 10",
-      "date": "2023-03-18",
-      "time": "18:00",
-      "city": "Madrid"
+      "text": "Test 10",
+      "dateTime": "2023-03-10T18:00:00.000Z",
+      "color": "black",
+      "city": "Houston"
+    },
+    {
+      "text": "APRIL 1",
+      "dateTime": "2023-04-10T18:00:00.000Z",
+      "color": "black",
+      "city": "Houston"
     }
   ]
 }

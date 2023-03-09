@@ -64,3 +64,8 @@
 .today {
   color: red
 }
+
+.reminder::before{
+  content: "\a";
+  white-space: pre;
+}
