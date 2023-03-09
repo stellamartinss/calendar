@@ -66,22 +66,16 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.calendarService
       .list(new Date())
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((reminders: Reminder[]) => {
-        reminders.map((reminder: Reminder) => {
+      .subscribe(async (reminders: Reminder[]) => {
+        const re = await Promise.all(reminders.map(async (reminder: Reminder) => {
           return {
             ...reminder,
-            weather: this.getWeather(reminder.city),
+            weather: await this.weatherService.getWeatherInformation(reminder.city).toPromise(),
           };
-        });
+        }));
 
-        console.log(reminders);
+        console.log(re)
       });
-  }
-
-  getWeather(city: string) {
-    const x = this.weatherService.getWeatherInformation(city);
-    console.log(x);
-    return x;
   }
 
   ngOnDestroy() {

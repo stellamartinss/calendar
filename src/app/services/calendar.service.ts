@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Reminder } from '../interfaces/reminder';
@@ -10,7 +11,7 @@ export class CalendarService {
 
   reminders: Reminder[] = [];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   create(data: Reminder): Reminder {
     return data;
@@ -20,9 +21,8 @@ export class CalendarService {
     return data;
   }
 
-  list(date: Date): Observable<Reminder[]> {
-    console.log(date);
-    return of(this.reminders);
+  list(date: Date): Observable<Object> {
+    return this.http.get('http://localhost:3000/reminders');
   }
 
   delete(reminderId: string): boolean {

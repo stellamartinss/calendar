@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Reminder } from 'src/app/interfaces/reminder';
 
@@ -9,16 +14,20 @@ import { Reminder } from 'src/app/interfaces/reminder';
   styleUrls: ['./reminder-form.component.scss'],
 })
 export class ReminderFormComponent implements OnInit {
+  public reminderForm: FormGroup;
+  public reminders = [];
 
-  public reminderForm: FormGroup
-  public reminders = []
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Reminder, private formBuilder: FormBuilder) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Reminder,
+  ) {
     this.reminderForm = new FormGroup({
-      reminder: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      reminder: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(30),
+      ]),
       date: new FormControl('', Validators.required),
       time: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required)
+      city: new FormControl('', Validators.required),
     });
   }
 
@@ -27,9 +36,10 @@ export class ReminderFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.reminders.push(this.reminderForm.value)
-    this.reminderForm.reset()
-    console.log(this.reminderForm.value)
+    this.reminders.push(this.reminderForm.value);
+    this.reminderForm.reset();
+
+    console.log(this.reminderForm.value);
     console.log(this.reminders);
     // add code to save reminder to backend or local storage
   }
