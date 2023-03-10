@@ -81,6 +81,7 @@
   border-radius: 100px;
   padding: 2px;
   font-size: 8px;
+  line-height: 8px;
   display: flex;
 
   &-text {
@@ -95,6 +96,10 @@
     position:relative;
     top: 6px;
     left: 15px;
+  }
+
+  @media(max-width: 700px) {
+    height: 10px;
   }
 }
 

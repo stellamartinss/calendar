@@ -78,7 +78,7 @@ export class ReminderFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { reminder: Reminder; date: Date; weeks: Day[][] },
+    public data: { reminder: Reminder; date?: Date; weeks: Day[][] },
     private calendarService: CalendarService,
     private commonService: CommonService,
     private dialogRef: MatDialogRef<ReminderFormComponent>
@@ -87,7 +87,7 @@ export class ReminderFormComponent implements OnInit {
     this.createForm(data);
   }
 
-  createForm(data: { reminder: Reminder; date: Date; weeks: Day[][] }) {
+  createForm(data: { reminder: Reminder; date?: Date; weeks: Day[][] }) {
     this.reminderForm = new FormGroup({
       id: new FormControl(null),
       text: new FormControl('', [

@@ -116,7 +116,11 @@
           [removable]="true"
           (click)="chooseColor(color)"
         >
-          <span class="chip-content"></span>
+          <span
+            class="chip-content"
+          >
+            <span class="material-icons" *ngIf="reminderForm.get('color').value === color"> done </span>
+          </span>
         </mat-chip>
       </mat-chip-list>
 

@@ -68,9 +68,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  openReminderForm($event, data: {reminder: Reminder, date: Date}) {
+  openReminderForm($event, data: {reminder: Reminder, date: string}) {
     $event.stopPropagation();
     const dialogRef = this.matDialog.open(ReminderFormComponent, {
+      width: '300px',
       data: {
         reminder: data.reminder,
         ...{...data.date ? {date: data.date} : {}},

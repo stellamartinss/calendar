@@ -4,7 +4,7 @@
   </button>
   <span>Jobsity challenge</span>
   <span class="spacer"></span>
-  <button mat-button (click)="openReminderForm($event, {reminder: null, date: null})">
+  <button mat-button (click)="openReminderForm($event, {reminder: null, date: today.toJSON().toString()})">
     <mat-icon>add</mat-icon> New reminder
   </button>
 </mat-toolbar>
@@ -64,11 +64,11 @@
             <div
               *ngFor="let reminder of day.reminders"
               [ngStyle]="{ 'background-color': reminder.color }"
-              class="reminder d-flex justify-content-between"
+              class="reminder d-flex justify-content-between align-items-center"
               (click)="openReminderForm($event, {reminder: reminder, date: null})"
             >
-              <div class="reminder-text" [ngClass]="{'reminder-text-smaller': reminder.text.length > 20}">{{ reminder.text }}</div>
-              <div *ngIf="reminder.weather.weather">
+              <div class="reminder-text d-none d-md-block text-left" [ngClass]="{'reminder-text-smaller': reminder.text.length > 20}">{{ reminder.text }}</div>
+              <div class="d-none d-md-block" *ngIf="reminder.weather.weather">
                 <span class="reminder-city">{{ reminder.city }}</span>
                 <img
                   src="http://openweathermap.org/img/w/{{
