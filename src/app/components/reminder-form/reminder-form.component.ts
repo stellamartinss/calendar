@@ -72,15 +72,21 @@ export class ReminderFormComponent implements OnInit {
     'Santiago',
   ];
   separatorKeysCodes: number[] = [1, 2];
+  submitStatus = { text: 'Save', action: 'save' };
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { reminders: Reminder; weeks: Day[][] },
+    public data: { reminder: Reminder; weeks: Day[][] },
     private calendarService: CalendarService,
     private commonService: CommonService,
     private dialogRef: MatDialogRef<ReminderFormComponent>
   ) {
+    this.createForm(data);
+  }
+
+  createForm(data: { reminder: Reminder; weeks: Day[][] }) {
     this.reminderForm = new FormGroup({
+      id: new FormControl(null),
       text: new FormControl('', [
         Validators.required,
         Validators.maxLength(30),
@@ -90,6 +96,21 @@ export class ReminderFormComponent implements OnInit {
       time: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
     });
+
+    if (data.reminder) {
+      this.prepareEditForm(data.reminder);
+    }
+  }
+
+  prepareEditForm(reminder) {
+    this.reminderForm.get('id').setValue(reminder.id);
+    this.reminderForm.get('text').setValue(reminder.text);
+    this.reminderForm.get('dateTime').setValue(new Date(reminder.dateTime));
+    this.reminderForm.get('time').setValue(new Date(reminder.time));
+    this.reminderForm.get('city').setValue(reminder.city);
+    this.reminderForm.get('color').setValue(reminder.color);
+
+    this.submitStatus = { text: 'Edit', action: 'edit' };
   }
 
   ngOnInit(): void {
@@ -97,21 +118,46 @@ export class ReminderFormComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.reminderForm.value.id = new Date().toJSON();
-    const result = await this.calendarService
-      .create(this.reminderForm.value)
-      .toPromise();
+    const result = this.submitStatus.action === 'save' ? this.createReminder() : this.updateReminder();
 
     if (result) {
+      this.close();
       this.reminderForm.reset();
-      this.dialogRef.close(
-        await this.commonService.loadCalendar(this.data.weeks)
-      );
     }
+  }
+
+  async createReminder() {
+    this.reminderForm.value.id = this.makeId();
+    return await this.calendarService
+      .create(this.reminderForm.value)
+      .toPromise();
+  }
+
+  async updateReminder() {
+    return await this.calendarService
+      .edit(this.reminderForm.value)
+      .toPromise();
+  }
+
+  makeId() {
+    return new Date()
+      .toJSON()
+      .toString()
+      .replace(/-/g, '')
+      .replace(/:/g, '')
+      .replace(/T/g, '')
+      .replace(/\./g, '')
+      .replace(/Z/g, '');
+  }
+
+  async close() {
+    this.dialogRef.close(
+      await this.commonService.loadCalendar(this.data.weeks)
+    );
   }
 
   chooseColor(color: string) {
     this.reminderForm.get('color').setValue(color);
-    console.log(this.reminderForm.value)
+    console.log(this.reminderForm.value);
   }
 }

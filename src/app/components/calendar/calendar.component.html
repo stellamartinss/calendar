@@ -38,10 +38,21 @@
             }"
             (click)="selectDate(day)"
           >
-            <span [ngClass]="{'today': day.number === today.getDate()}">{{ day.number }}</span>
+            <span [ngClass]="{ today: day.number === today.getDate() }">{{
+              day.number
+            }}</span>
             <br />
-            <span *ngFor="let reminder of day.reminders" [ngStyle]="{'background-color': reminder.color}" class="reminder">
-              {{reminder.text}} <span *ngIf="reminder.weather.weather"> - {{reminder.weather.name}}: {{reminder.weather.weather[0].main }}</span>
+            <span
+              *ngFor="let reminder of day.reminders"
+              [ngStyle]="{ 'background-color': reminder.color }"
+              class="reminder"
+              (click)="openReminderForm(reminder)"
+            >
+              {{ reminder.text }}
+              <span *ngIf="reminder.weather.weather">
+                - {{ reminder.weather.name }}:
+                {{ reminder.weather.weather[0].main }}</span
+              >
             </span>
           </div>
         </div>

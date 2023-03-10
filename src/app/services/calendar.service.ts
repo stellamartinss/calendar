@@ -1,28 +1,40 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Reminder } from '../interfaces/reminder';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalendarService {
-
   reminders: Reminder[] = [];
+  api = '';
 
-  constructor(private http: HttpClient) { }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 123'
+    })
+  };
+
+  constructor(private http: HttpClient) {}
 
   create(data: Reminder): Observable<Object> {
-    return this.http.post('http://localhost:3000/reminders', data)
+    console.log(data);
+    return this.http.post(`${this.api}/reminders`, data, this.httpOptions);
   }
 
-  edit(data: Reminder): Reminder {
-    return data;
+  edit(data: Reminder): Observable<Object> {
+    return this.http.patch(
+      `${this.api}/reminders/${data.id}`,
+      data,
+      this.httpOptions
+    );
   }
 
   list(date: Date): Observable<Object> {
-    return this.http.get('http://localhost:3000/reminders');
+    return this.http.get(`${this.api}/reminders`, this.httpOptions);
   }
 
   delete(reminderId: string): boolean {
