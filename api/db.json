@@ -319,6 +319,14 @@
       "color": "#63d3ff",
       "time": "09:30",
       "city": "Moscow"
+    },
+    {
+      "id": "20230310191824956",
+      "text": "Gym",
+      "dateTime": "2023-03-07",
+      "color": "#ff548f",
+      "time": "16:18",
+      "city": "Paris"
     }
   ]
 }
