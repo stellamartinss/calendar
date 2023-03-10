@@ -73,7 +73,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const dialogRef = this.matDialog.open(ReminderFormComponent, {
       data: {
         reminder: data.reminder,
-        date: data.date,
+        ...{...data.date ? {date: data.date} : {}},
         weeks: this.weeks,
       },
     });

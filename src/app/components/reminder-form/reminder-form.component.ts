@@ -19,7 +19,7 @@ import { CommonService } from 'src/app/services/common.service';
 export class ReminderFormComponent implements OnInit {
   public reminderForm: FormGroup;
   public dateTime = new Date();
-  public time = new Date();
+  public time: string;
   public reminders = [];
   public colors = ['#02779e', '#63d3ff', '#be80ff', '#9061c2', '#ff548f'];
   public cities = [
@@ -78,15 +78,16 @@ export class ReminderFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { reminder: Reminder, date: Date, weeks: Day[][] },
+    public data: { reminder: Reminder; date: Date; weeks: Day[][] },
     private calendarService: CalendarService,
     private commonService: CommonService,
     private dialogRef: MatDialogRef<ReminderFormComponent>
   ) {
+    debugger;
     this.createForm(data);
   }
 
-  createForm(data: { reminder: Reminder, date: Date, weeks: Day[][] }) {
+  createForm(data: { reminder: Reminder; date: Date; weeks: Day[][] }) {
     this.reminderForm = new FormGroup({
       id: new FormControl(null),
       text: new FormControl('', [
@@ -98,10 +99,24 @@ export class ReminderFormComponent implements OnInit {
       time: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
     });
-debugger
+    debugger;
+    if (data.date) {
+      this.setDate(data.date.toString().split('T')[0]);
+      const time = new Date();
+      this.setTime(`${time.getHours()}:${time.getMinutes()}`);
+    }
+
     if (data.reminder) {
       this.prepareEditForm(data.reminder);
     }
+  }
+
+  setDate(date) {
+    this.dateTime = date;
+  }
+
+  setTime(date: string) {
+    this.time = date;
   }
 
   prepareEditForm(reminder) {
@@ -112,8 +127,8 @@ debugger
     this.reminderForm.get('city').setValue(reminder.city);
     this.reminderForm.get('color').setValue(reminder.color);
 
-    this.dateTime = reminder.dateTime
-    this.time = reminder.time
+    this.dateTime = reminder.dateTime;
+    this.time = reminder.time;
 
     this.submitStatus = { text: 'Edit', action: 'edit' };
   }
@@ -123,7 +138,10 @@ debugger
   }
 
   async onSubmit() {
-    const result = this.submitStatus.action === 'save' ? this.createReminder() : this.updateReminder();
+    const result =
+      this.submitStatus.action === 'save'
+        ? this.createReminder()
+        : this.updateReminder();
 
     if (result) {
       this.close();
@@ -139,9 +157,7 @@ debugger
   }
 
   async updateReminder() {
-    return await this.calendarService
-      .edit(this.reminderForm.value)
-      .toPromise();
+    return await this.calendarService.edit(this.reminderForm.value).toPromise();
   }
 
   makeId() {
@@ -165,9 +181,11 @@ debugger
   }
 
   async remove() {
-    const result = await this.calendarService.delete(this.data.reminder.id).toPromise()
-    if(result) {
-      this.close()
+    const result = await this.calendarService
+      .delete(this.data.reminder.id)
+      .toPromise();
+    if (result) {
+      this.close();
     }
   }
 }
