@@ -34,6 +34,7 @@ export class ReminderFormComponent implements OnInit {
     private dialogRef: MatDialogRef<ReminderFormComponent>
   ) {
     debugger;
+    console.log(data)
     this.createForm(data);
   }
 

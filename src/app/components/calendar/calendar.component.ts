@@ -129,8 +129,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   async getReminders() {
     this.weeks = await this.commonService.loadCalendar(this.weeks);
-
-    console.log(this.weeks);
   }
 
   generateCalendar() {
@@ -169,9 +167,5 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   getMonthName(month: number) {
     return this.monthsOfYear[month].name;
-  }
-
-  selectDay(day: number) {
-    console.log(day);
   }
 }
