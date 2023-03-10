@@ -1,23 +1,29 @@
 .calendar-container {
   font-family: Arial, sans-serif;
   margin: 50px auto;
-  border: 1px solid #ccc;
   border-radius: 5px;
-
 }
 
 .calendar-header {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f7f7f7;
+  background-color: #de3c4b;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+
+  h2 {
+    color: white;
+  }
+
+  button {
+    font-size: 8px;
+  }
 }
 .calendar-body {
   display: flex;
   flex-direction: column;
+  background-color: white;
   height: 100%;
 }
 
@@ -38,7 +44,7 @@
   flex-direction: column;
   flex-grow: 1;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: white;
 }
 
 .week {
@@ -53,19 +59,44 @@
 
 .day-cell {
   text-align: right !important;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #ededed;
   cursor: pointer;
 }
 
 .day-row {
-  border: 1px solid #ccc
+  border: 1px solid #ededed;
 }
 
 .today {
-  color: red
+  color: red;
 }
 
-.reminder::before{
+.reminder::before {
   content: "\a";
   white-space: pre;
+}
+
+.reminder {
+  color: white;
+  border-radius: 100px;
+  padding: 2px;
+  font-size: 12px;
+  display: flex;
+
+  &-text {
+    font-weight: bolder;
+  }
+}
+
+.btn-switch-calendar {
+  background-color: transparent;
+  border: transparent;
+  color: #ed848e;
+}
+
+h2 span.material-icons {
+  display: inline-flex;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #ed848e;
 }

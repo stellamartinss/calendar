@@ -128,6 +128,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   async getReminders() {
     this.weeks = await this.commonService.loadCalendar(this.weeks)
+
+    console.log(this.weeks)
   }
 
   generateCalendar() {

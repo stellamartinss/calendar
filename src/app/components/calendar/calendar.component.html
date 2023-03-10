@@ -12,14 +12,33 @@
 <!-- Create the calendar here -->
 <!-- ======================== -->
 
-<div class="container">
+<div class="container pb-5">
   <div class="calendar-container">
     <div class="calendar-header">
-      <button (click)="prevYear()">Prev Year</button>
-      <button (click)="prevMonth()">Prev Month</button>
-      <h2>{{ monthName }} {{ year }}</h2>
-      <button (click)="nextMonth()">Next Month</button>
-      <button (click)="nextYear()">Next Year</button>
+      <div class="row d-flex justify-content-center text-center pt-3">
+        <div class="col-md-2">
+          <h2>
+            <span class="material-icons" (click)="prevMonth()">
+              chevron_left
+            </span>
+            {{ monthName }}
+            <span class="material-icons" (click)="nextMonth()">
+              chevron_right
+            </span>
+          </h2>
+        </div>
+        <div class="col-md-2">
+          <h2>
+            <span class="material-icons" (click)="prevYear()" ƒ>
+              chevron_left
+            </span>
+            {{ year }}
+            <span class="material-icons" (click)="nextYear()">
+              chevron_right
+            </span>
+          </h2>
+        </div>
+      </div>
     </div>
 
     <div class="calendar-body">
@@ -48,11 +67,16 @@
               class="reminder"
               (click)="openReminderForm(reminder)"
             >
-              {{ reminder.text }}
+              <span class="reminder-text">{{ reminder.text }}</span>
               <span *ngIf="reminder.weather.weather">
-                - {{ reminder.weather.name }}:
-                {{ reminder.weather.weather[0].main }}</span
-              >
+                <img
+                  src="http://openweathermap.org/img/w/{{
+                    reminder.weather.weather[0].icon
+                  }}.png"
+                  height="20"
+                  width="20"
+                  [alt]="reminder.weather.weather[0].main"
+              /></span>
             </span>
           </div>
         </div>
