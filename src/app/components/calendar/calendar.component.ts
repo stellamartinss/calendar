@@ -68,18 +68,18 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  openReminderForm(reminder?: Reminder) {
+  openReminderForm($event, data: {reminder: Reminder, date: Date}) {
+    $event.stopPropagation();
     const dialogRef = this.matDialog.open(ReminderFormComponent, {
       data: {
-        reminder: reminder,
+        reminder: data.reminder,
+        date: data.date,
         weeks: this.weeks,
       },
     });
 
-    dialogRef.afterClosed().subscribe((data) => {
-      if (data) {
-        this.weeks = data;
-      }
+    dialogRef.afterClosed().subscribe(async (data) => {
+      this.weeks = await this.commonService.loadCalendar(this.weeks)
     });
   }
 

@@ -18,6 +18,8 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class ReminderFormComponent implements OnInit {
   public reminderForm: FormGroup;
+  public dateTime = new Date();
+  public time = new Date();
   public reminders = [];
   public colors = ['#02779e', '#63d3ff', '#be80ff', '#9061c2', '#ff548f'];
   public cities = [
@@ -76,7 +78,7 @@ export class ReminderFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { reminder: Reminder; weeks: Day[][] },
+    public data: { reminder: Reminder, date: Date, weeks: Day[][] },
     private calendarService: CalendarService,
     private commonService: CommonService,
     private dialogRef: MatDialogRef<ReminderFormComponent>
@@ -84,7 +86,7 @@ export class ReminderFormComponent implements OnInit {
     this.createForm(data);
   }
 
-  createForm(data: { reminder: Reminder; weeks: Day[][] }) {
+  createForm(data: { reminder: Reminder, date: Date, weeks: Day[][] }) {
     this.reminderForm = new FormGroup({
       id: new FormControl(null),
       text: new FormControl('', [
@@ -96,7 +98,7 @@ export class ReminderFormComponent implements OnInit {
       time: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
     });
-
+debugger
     if (data.reminder) {
       this.prepareEditForm(data.reminder);
     }
@@ -109,6 +111,9 @@ export class ReminderFormComponent implements OnInit {
     this.reminderForm.get('time').setValue(new Date(reminder.time));
     this.reminderForm.get('city').setValue(reminder.city);
     this.reminderForm.get('color').setValue(reminder.color);
+
+    this.dateTime = reminder.dateTime
+    this.time = reminder.time
 
     this.submitStatus = { text: 'Edit', action: 'edit' };
   }
@@ -151,9 +156,7 @@ export class ReminderFormComponent implements OnInit {
   }
 
   async close() {
-    this.dialogRef.close(
-      await this.commonService.loadCalendar(this.data.weeks)
-    );
+    this.dialogRef.close();
   }
 
   chooseColor(color: string) {

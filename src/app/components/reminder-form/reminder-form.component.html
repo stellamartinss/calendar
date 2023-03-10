@@ -1,6 +1,12 @@
 <div class="container">
-  <span class="text-right pointer" (click)="close()">x</span>
-  <h1>Add Reminder</h1>
+  <div class="row">
+    <div class="col-12 close-button pointer">
+      <span class="material-icons" (click)="close()"> close </span>
+    </div>
+    <div class="col-12">
+      <h1>Add Reminder</h1>
+    </div>
+  </div>
   <form [formGroup]="reminderForm" class="row">
     <mat-form-field class="col-12">
       <mat-label>Remainder:</mat-label>
@@ -36,7 +42,13 @@
 
     <mat-form-field>
       <mat-label>Date:</mat-label>
-      <input matInput type="date" id="dateTime" formControlName="dateTime" />
+      <input
+        matInput
+        type="date"
+        id="dateTime"
+        formControlName="dateTime"
+        [(ngModel)]="dateTime"
+      />
       <mat-error
         *ngIf="
           reminderForm.controls['dateTime'].invalid &&
@@ -52,7 +64,13 @@
 
     <mat-form-field>
       <mat-label>Time:</mat-label>
-      <input matInput type="time" id="time" formControlName="time" />
+      <input
+        matInput
+        type="time"
+        id="time"
+        formControlName="time"
+        [(ngModel)]="time"
+      />
       <mat-error
         *ngIf="
           reminderForm.controls['time'].invalid &&
@@ -119,11 +137,11 @@
       <button
         mat-raised-button
         color="primary"
-        class="btn"
+        class="btn btn-delete"
         (click)="remove()"
         *ngIf="submitStatus.action === 'edit'"
       >
-        Delete
+        <span class="material-icons"> delete_outline </span>
       </button>
     </div>
     <div class="col-6">

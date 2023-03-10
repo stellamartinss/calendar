@@ -5,10 +5,17 @@ span.remainder-remaining {
 }
 
 .chip-content {
-  height: 30px;
-  width: 30px;
+  width: 9px;
 }
 
 .pointer {
   cursor: pointer
+}
+
+.close-button {
+  text-align: right;
+}
+
+.btn-delete {
+  color: #de3c4b
 }
