@@ -33,7 +33,7 @@ export class CalendarService {
     );
   }
 
-  list(date: Date): Observable<Object> {
+  list(date?: Date): Observable<Object> {
     return this.http.get('/reminders', this.httpOptions);
   }
 

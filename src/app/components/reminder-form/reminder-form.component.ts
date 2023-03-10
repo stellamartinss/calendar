@@ -10,6 +10,7 @@ import { Day } from 'src/app/interfaces/day';
 import { Reminder } from 'src/app/interfaces/reminder';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CommonService } from 'src/app/services/common.service';
+import { cities } from 'src/app/constants/cities';
 
 @Component({
   selector: 'app-reminder-form',
@@ -22,57 +23,7 @@ export class ReminderFormComponent implements OnInit {
   public time: string;
   public reminders = [];
   public colors = ['#02779e', '#63d3ff', '#be80ff', '#9061c2', '#ff548f'];
-  public cities = [
-    'Tokyo',
-    'New York',
-    'Paris',
-    'London',
-    'Beijing',
-    'Dubai',
-    'Los Angeles',
-    'Rome',
-    'Bangkok',
-    'Istanbul',
-    'Shanghai',
-    'Barcelona',
-    'Berlin',
-    'Sydney',
-    'San Francisco',
-    'Amsterdam',
-    'Rio de Janeiro',
-    'Vienna',
-    'Chicago',
-    'Cape Town',
-    'Moscow',
-    'Hong Kong',
-    'Toronto',
-    'Mumbai',
-    'Dublin',
-    'Singapore',
-    'Riyadh',
-    'Madrid',
-    'Seoul',
-    'Melbourne',
-    'Vancouver',
-    'Miami',
-    'Edinburgh',
-    'Buenos Aires',
-    'Zurich',
-    'Seattle',
-    'Lisbon',
-    'Hanoi',
-    'Prague',
-    'Jerusalem',
-    'Athens',
-    'Copenhagen',
-    'Oslo',
-    'Stockholm',
-    'Kyoto',
-    'Krakow',
-    'Budapest',
-    'Dubrovnik',
-    'Santiago',
-  ];
+  public cities = cities;
   separatorKeysCodes: number[] = [1, 2];
   submitStatus = { text: 'Save', action: 'save' };
 
