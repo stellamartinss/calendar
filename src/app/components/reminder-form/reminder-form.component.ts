@@ -160,4 +160,11 @@ export class ReminderFormComponent implements OnInit {
     this.reminderForm.get('color').setValue(color);
     console.log(this.reminderForm.value);
   }
+
+  async remove() {
+    const result = await this.calendarService.delete(this.data.reminder.id).toPromise()
+    if(result) {
+      this.close()
+    }
+  }
 }

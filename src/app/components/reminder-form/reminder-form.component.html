@@ -1,7 +1,7 @@
 <div class="container">
   <span class="text-right pointer" (click)="close()">x</span>
   <h1>Add Reminder</h1>
-  <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" class="row">
+  <form [formGroup]="reminderForm" class="row">
     <mat-form-field class="col-12">
       <mat-label>Remainder:</mat-label>
       <input
@@ -68,9 +68,9 @@
 
     <mat-form-field>
       <mat-label>City</mat-label>
-      <mat-select  id="city" formControlName="city">
+      <mat-select id="city" formControlName="city">
         <mat-option *ngFor="let city of cities" [value]="city">
-          {{city}}
+          {{ city }}
         </mat-option>
       </mat-select>
 
@@ -115,14 +115,28 @@
       </mat-error>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      class="btn btn-primary"
-      type="submit"
-      [disabled]="reminderForm.invalid"
-    >
-      {{submitStatus.text}}
-    </button>
+    <div class="col-6">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn"
+        (click)="remove()"
+        *ngIf="submitStatus.action === 'edit'"
+      >
+        Delete
+      </button>
+    </div>
+    <div class="col-6">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn btn-primary w-100"
+        type="submit"
+        (click)="onSubmit()"
+        [disabled]="reminderForm.invalid"
+      >
+        {{ submitStatus.text }}
+      </button>
+    </div>
   </form>
 </div>

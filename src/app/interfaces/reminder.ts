@@ -1,5 +1,5 @@
 export interface Reminder {
-  id?: Date,
+  id?: string,
   text: string;
   dateTime: Date;
   time?: string;
