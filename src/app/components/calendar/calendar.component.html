@@ -61,14 +61,22 @@
               day.number
             }}</span>
             <br />
-            <span
+            <div
               *ngFor="let reminder of day.reminders"
               [ngStyle]="{ 'background-color': reminder.color }"
-              class="reminder"
+              class="reminder d-flex justify-content-between"
               (click)="openReminderForm(reminder)"
             >
-              <span class="reminder-text">{{ reminder.text }}</span>
-              <span *ngIf="reminder.weather.weather">
+              <div
+                class="reminder-text"
+                [ngClass]="{
+                  'reminder-text-smaller': reminder.text.length > 20
+                }"
+              >
+                {{ reminder.text }}
+              </div>
+              <div *ngIf="reminder.weather.weather">
+                <span class="reminder-city">{{ reminder.city }}</span>
                 <img
                   src="http://openweathermap.org/img/w/{{
                     reminder.weather.weather[0].icon
@@ -76,8 +84,9 @@
                   height="20"
                   width="20"
                   [alt]="reminder.weather.weather[0].main"
-              /></span>
-            </span>
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

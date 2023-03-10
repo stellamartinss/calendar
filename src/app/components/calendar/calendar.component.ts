@@ -9,7 +9,6 @@ import { ReminderFormComponent } from '../reminder-form/reminder-form.component'
 import { CommonService } from 'src/app/services/common.service';
 import { Day } from 'src/app/interfaces/day';
 
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -61,7 +60,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getReminders()
+    this.getReminders();
   }
 
   ngOnDestroy() {
@@ -73,26 +72,27 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const dialogRef = this.matDialog.open(ReminderFormComponent, {
       data: {
         reminder: reminder,
-        weeks: this.weeks
+        weeks: this.weeks,
       },
     });
 
     dialogRef.afterClosed().subscribe((data) => {
-      debugger
-      this.weeks = data
-    })
+      if (data) {
+        this.weeks = data;
+      }
+    });
   }
 
   prevYear() {
     this.year--;
     this.generateCalendar();
-    this.getReminders()
+    this.getReminders();
   }
 
   nextYear() {
     this.year++;
     this.generateCalendar();
-    this.getReminders()
+    this.getReminders();
   }
 
   prevMonth() {
@@ -104,7 +104,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
     this.monthName = this.getMonthName(this.month);
     this.generateCalendar();
-    this.getReminders()
+    this.getReminders();
   }
 
   nextMonth() {
@@ -116,20 +116,20 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
     this.monthName = this.getMonthName(this.month);
     this.generateCalendar();
-    this.getReminders()
+    this.getReminders();
   }
 
   selectDate(day) {
     if (!day.outsideMonth) {
       this.selectedDate = new Date(this.year, this.month, day.number);
-      this.getReminders()
+      this.getReminders();
     }
   }
 
   async getReminders() {
-    this.weeks = await this.commonService.loadCalendar(this.weeks)
+    this.weeks = await this.commonService.loadCalendar(this.weeks);
 
-    console.log(this.weeks)
+    console.log(this.weeks);
   }
 
   generateCalendar() {
