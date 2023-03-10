@@ -49,16 +49,16 @@ export class CommonService implements OnDestroy {
   joinCalendarAndReminders(calendar: Day[][], reminders: Reminder[]) {
     return calendar.map((week) => {
       return week.map((day) => {
-        const dayDate = new Date(day.date);
-        const remindersForDay = reminders.filter((reminder) => {
-          const reminderDate = new Date(reminder.dateTime);
-          return (
-            dayDate.getFullYear() === reminderDate.getFullYear() &&
-            dayDate.getMonth() === reminderDate.getMonth() &&
-            dayDate.getDate() === reminderDate.getDate()
-          );
-        });
-        return { ...day, reminders: remindersForDay };
+        const dayDate = day.date?.toString().split('T')[0]
+        debugger;
+        if (dayDate) {
+          const remindersForDay = reminders.filter((reminder) => {
+            const reminderDate = reminder.dateTime.toString()
+            return reminderDate === dayDate
+          });
+          return { ...day, reminders: remindersForDay };
+        }
+        return { ...day };
       });
     });
   }

@@ -80,7 +80,6 @@ export class ReminderFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { reminder: Reminder; date?: Date; weeks: Day[][] },
     private calendarService: CalendarService,
-    private commonService: CommonService,
     private dialogRef: MatDialogRef<ReminderFormComponent>
   ) {
     debugger;
@@ -94,7 +93,7 @@ export class ReminderFormComponent implements OnInit {
         Validators.required,
         Validators.maxLength(30),
       ]),
-      dateTime: new FormControl('', Validators.required),
+      dateTime: new FormControl(new Date(), Validators.required),
       color: new FormControl('', Validators.required),
       time: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
@@ -151,6 +150,7 @@ export class ReminderFormComponent implements OnInit {
 
   async createReminder() {
     this.reminderForm.value.id = this.makeId();
+    debugger;
     return await this.calendarService
       .create(this.reminderForm.value)
       .toPromise();

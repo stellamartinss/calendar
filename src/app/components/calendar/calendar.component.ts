@@ -148,8 +148,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     for (let i = 1; i <= numDaysInMonth; i++) {
       const date = new Date(this.year, this.month, i);
-      week.push({ number: i, outsideMonth: false, date: date.toJSON() });
       dayOfWeek++;
+
+      week.push({ number: i, outsideMonth: false, date: date.toJSON() });
 
       if (dayOfWeek === 7) {
         this.weeks.push(week);
