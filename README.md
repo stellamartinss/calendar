@@ -42,15 +42,15 @@ You should start by rendering a single month view of a calendar for the current 
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start`, than run `npm run json-server` so the api can run too.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Navigate to `http://localhost:4200/`.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io). 
+
+PS.: the use test `ReminderFormComponent > should create a reminder`  is not working because the id is set by the current date and time, it also take on count the seconds, so when it is generated and then tested in general one second passed and this is the difference between them. The same is occuring with `WeatherService > should be created` test. If I had some more time I would do this improvement.
 
 ## Running end-to-end tests
 
